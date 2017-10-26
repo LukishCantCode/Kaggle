@@ -1,4 +1,4 @@
-#V1.0.0
+#V2.0.0
 import timeit
 start_time = timeit.default_timer()
 # code you want to evaluate
