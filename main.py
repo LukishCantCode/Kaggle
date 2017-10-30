@@ -42,7 +42,9 @@ clf.fit(X_train,Y_train)
 print clf.predict(X_test[0:10])
 
 y_pred=clf.predict(X_test)
-Y_pred=pd.DataFrame(y_pred,columns=['Survived'])
+Y_pred=pd.DataFrame(y_pred,columns=['Survived2'])
+
+#Just to get a replica of y_pred
 Y_test1=pd.DataFrame(y_pred,columns=['Survived'])
 
 
@@ -50,6 +52,7 @@ Y_test1=pd.DataFrame(y_pred,columns=['Survived'])
 
 print clf.score(X_test,Y_test)
 
+"""
 Ar=Y_test.index.get_values()
 length=len(Ar)
 list=[]
@@ -66,13 +69,34 @@ d2=range(0,len(Y_test))
 from prettytable import PrettyTable
 t = PrettyTable(['Actual','Prediction'])
 for x in d2:
- t.add_row([Y_test1['Survived'][x],Y_pred['Survived'][x]])
+ t.add_row([Y_test1['Survived'][x],Y_pred['Survived2'][x]])
  
  
+
+#Main=pd.concat([X_test,Y_test.reset_index(drop=True),Y_pred.reset_index(drop=True)],axis=1)
 print t
 
+"""
+#Main=pd.concat([X_test,Y_test.reset_index(drop=True),Y_pred.reset_index(drop=True)])
 
-#print(X_test[(Y_test.reset_index(drop=True) != Y_pred.reset_index(drop=True))]).sum()
+#******VIMP***********
+# Arrangement for concating three dataframes columnwise
+
+
+X_test2=X_test.reset_index(drop=True)
+Y_test2=Y_test.reset_index(drop=True)
+Y_pred2=Y_pred.reset_index(drop=True)
+Main=pd.concat([X_test2,Y_test2,Y_pred2],axis=1)
+
+
+#Condition based indexing
+#print Main[(Main['Survived']==Main['Survived2'])] #Correct Prediction
+#print Main[(Main['Survived']!=Main['Survived2'])] #Wrong Prediction
+#print((X_test[(Y_test.reset_index(drop=True) != Y_pred.reset_index(drop=True))]).reset_index(drop=True)).sum()
+
+
+print (Main['Survived']==Main['Survived2']).sum()
+print (Main['Survived']!=Main['Survived2']).sum()
 
      
 
